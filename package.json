@@ -1,0 +1,22 @@
+{
+  "name": "gh-annotate",
+  "version": "0.0.1",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Rico Sta. Cruz <hi@ricostacruz.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^2.2.0",
+    "mocha": "^2.2.1",
+    "mocha-clean": "^0.4.0",
+    "read-input": "^0.2.0"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "yargs": "^3.7.0"
+  }
+}

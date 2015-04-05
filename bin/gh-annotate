@@ -1,0 +1,49 @@
+#!/usr/bin/env node
+
+if (!module.parent) run();
+
+function run () {
+  var read = require('read-input');
+  var args = process.argv.slice(2);
+  if (!args[0]) {
+    console.error('  usage: gh-annotate <user>/<repo> [<files...>]');
+    }
+  read(args.slice(1), function (err, res) {
+    if (err) throw err;
+    console.log(injekt(res.data, args[0]));
+  });
+}
+
+function injekt (input, repo) {
+  var annotations = [];
+  var body = "" + input;
+  
+  body = body.replace(/#(\d+)(.?)/, function (_, issue, suff) {
+    if (suff === ']') return _;
+    var key = '[#' + issue + ']';
+
+    if (!RegExp('(^|\n)' + escapeRegExp(key) + ':').test(body))
+      annotations.push('' + key + ': https://github.com/' + repo + '/issues/' + issue);
+    return '' + key + suff;
+  });
+
+  body = body.replace(/@([a-zA-Z0-9_-]+)(.?)/, function (_, user, suff) {
+    if (suff === ']') return _;
+    var key = '[@' + user + ']';
+
+    if (!RegExp('(^|\n)' + escapeRegExp(key) + ':').test(body))
+      annotations.push('' + key + ': https://github.com/' + user);
+    return '' + key + suff;
+  });
+
+  if (annotations.length > 0)
+    return [ body, annotations.join("\n") ].join("\n\n");
+  else
+    return body;
+}
+
+module.exports = { run: run, injekt: injekt };
+
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
