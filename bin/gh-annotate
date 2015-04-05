@@ -41,8 +41,8 @@ function run () {
     if (err) throw err;
     out = injekt(res.data, gh);
 
-    if (argv._[1]) {
-      require('fs').writeFileSync(argv._[1], out, 'utf-8');
+    if (argv._[0]) {
+      require('fs').writeFileSync(argv._[0], out, 'utf-8');
     } else {
       console.log(out);
     }
