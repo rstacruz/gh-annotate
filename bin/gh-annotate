@@ -4,13 +4,16 @@ if (!module.parent) run();
 
 function run () {
   var read = require('read-input');
-  var args = process.argv.slice(2);
-  if (!args[0]) {
+  var argv = require('yargs').argv;
+
+  if (!argv._[0]) {
     console.error('  usage: gh-annotate <user>/<repo> [<files...>]');
-    }
-  read(args.slice(1), function (err, res) {
+    process.exit(1);
+  }
+
+  read(argv._.slice(1), function (err, res) {
     if (err) throw err;
-    console.log(injekt(res.data, args[0]));
+    console.log(injekt(res.data, argv._[0]));
   });
 }
 
