@@ -2,6 +2,8 @@
 
 Adds GitHub links to Markdown files. Perfect for maintaining changelog files.
 
+[![Status](https://travis-ci.org/rstacruz/gh-annotate.svg?branch=master)](https://travis-ci.org/rstacruz/gh-annotate)  
+
 <br>
 
 ## What it does
@@ -52,3 +54,19 @@ And you get this:
 ```
 npm install -g gh-annotate
 ```
+
+[![npm version](http://img.shields.io/npm/v/gh-annotate.svg?style=flat)](https://npmjs.org/package/gh-annotate "View this project on npm")
+
+<br>
+
+## Thanks
+
+**gh-annotate** © 2015+, Rico Sta. Cruz. Released under the [MIT] License.<br>
+Authored and maintained by Rico Sta. Cruz with help from contributors ([list][contributors]).
+
+> [ricostacruz.com](http://ricostacruz.com) &nbsp;&middot;&nbsp;
+> GitHub [@rstacruz](https://github.com/rstacruz) &nbsp;&middot;&nbsp;
+> Twitter [@rstacruz](https://twitter.com/rstacruz)
+
+[MIT]: http://mit-license.org/
+[contributors]: http://github.com/rstacruz/gh-annotate/contributors
