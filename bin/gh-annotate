@@ -77,29 +77,26 @@ function injekt (input, repo) {
   var annotations = [];
   var body = "" + input;
   
-  body = body.replace(/#(\d+)(.?)/g, function (_, issue, suff) {
-    if (suff === ']') return _;
-    var key = '[#' + issue + ']';
-
-    if (!RegExp('(^|\n)' + escapeRegExp(key) + ':').test(body))
-      annotations.push('' + key + ': https://github.com/' + repo + '/issues/' + issue);
-    return '' + key + suff;
-  });
-
-  body = body.replace(/@([a-zA-Z0-9_-]+)(.?)/g, function (_, user, suff) {
-    if (suff === ']') return _;
-    var key = '[@' + user + ']';
-
-    if (!RegExp('(^|\n)' + escapeRegExp(key) + ':').test(body))
-      annotations.push('' + key + ': https://github.com/' + user);
-    return '' + key + suff;
-  });
+  body = work(body, /#(\d+)(.?)/g, '[#&]', 'https://github.com/{repo}/issues/&');
+  body = work(body, /@([a-zA-Z0-9_-]+)(.?)/g, '[@&]', 'https://github.com/&');
 
   if (annotations.length > 0) {
     if (!/\n$/.test(body)) body = body + "\n";
     return [ body, annotations.join("\n") ].join("\n");
   } else {
     return body;
+  }
+
+  function work (body, expr, replacement, urlspec) {
+    return body.replace(expr, function (_, issue, suff) {
+      if (suff === ']') return _;
+      var key = replacement.replace('&', issue);
+      var url = urlspec.replace('{repo}', repo).replace('&', issue);
+
+      if (!RegExp('(^|\n)' + escapeRegExp(key) + ':').test(body))
+        annotations.push('' + key + ': ' + url);
+      return '' + key + suff;
+    });
   }
 }
 
