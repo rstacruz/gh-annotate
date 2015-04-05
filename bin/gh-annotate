@@ -18,7 +18,7 @@ function run () {
   }
 
   if (!argv._[0] || argv.help || argv.h) {
-    help();
+    help({ method: console.error });
     process.exit(1);
   }
 
@@ -35,15 +35,17 @@ function run () {
 }
 
 function help (options) {
-  console.error([
+  var log = options && options.method ? options.method : console.log;
+
+  log([
     '',
     '  Usage:',
     '      gh-annotate <user>/<repo> <file>',
     '      ... | gh-annotate <user>/<repo>',
   ].join("\n"));
 
-  if (options && options.full)
-    console.error([
+  if (options && options.full) {
+    log([
       '',
       '  Description:',
       '      annotates files.',
@@ -53,6 +55,7 @@ function help (options) {
       '      -h, --help        show this screen',
       '      -v, --version     print version information'
     ].join("\n"));
+  }
 }
 
 function injekt (input, repo) {
