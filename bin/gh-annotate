@@ -34,13 +34,12 @@ function githubSpec() {
 
 function run () {
   var read = require('read-input');
-  var argv = require('yargs').argv;
-  var out;
+  var argv = require('yargs')
+    .alias('v', 'version')
+    .version(require('../package.json').version)
+    .argv;
 
-  if (argv.version || argv.v) {
-    console.log(require('../package.json').version);
-    process.exit(0);
-  }
+  var out;
 
   if (argv.help || argv.h) {
     help({ full: true });
