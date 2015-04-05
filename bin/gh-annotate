@@ -36,15 +36,14 @@ function run () {
   var read = require('read-input');
   var argv = require('yargs')
     .alias('v', 'version')
-    .version(require('../package.json').version)
+    .alias('h', 'help')
+    .help('h')
+    .version(function() { return require('../package').version; })
+    .usage('Usage:\n$0 <file>\n... | $0')
+    .describe('v', 'show version information')
     .argv;
 
   var out;
-
-  if (argv.help || argv.h) {
-    help({ full: true });
-    process.exit(0);
-  }
 
   var gh = githubSpec();
 
@@ -58,38 +57,6 @@ function run () {
       console.log(out);
     }
   });
-}
-
-/*
- * help text
- *
- *     help()
- *     help({ full: true })
- *     help({ method: console.error })
- */
-
-function help (options) {
-  var log = options && options.method ? options.method : console.log;
-
-  log([
-    '',
-    '  Usage:',
-    '      gh-annotate <file>',
-    '      ... | gh-annotate',
-  ].join("\n"));
-
-  if (options && options.full) {
-    log([
-      '',
-      '  Description:',
-      '      annotates files.',
-      '      if <file> is given, it\'ll be written in place.',
-      '',
-      '  Options:',
-      '      -h, --help        show this screen',
-      '      -v, --version     print version information'
-    ].join("\n"));
-  }
 }
 
 /*
