@@ -5,16 +5,41 @@ if (!module.parent) run();
 function run () {
   var read = require('read-input');
   var argv = require('yargs').argv;
+  var out;
 
-  if (!argv._[0]) {
-    console.error('  usage: gh-annotate <user>/<repo> [<files...>]');
+  if (argv.version || argv.v) {
+    console.log(require('../package.json').version);
+    process.exit(0);
+  }
+
+  if (!argv._[0] || argv.help || argv.h) {
+    console.error([
+      '',
+      '  Usage:',
+      '      gh-annotate <user>/<repo> <file>',
+      '      ... | gh-annotate <user>/<repo>',
+      '',
+      '  Description:',
+      '      annotates files.',
+      '      if <file> is given, it\'ll be written in place.',
+      '',
+      '  Options:',
+      '      -h, --help        show this screen',
+      '      -v, --version     print version information'
+    ].join("\n"));
     process.exit(1);
   }
 
   read(argv._.slice(1), function (err, res) {
     if (err) throw err;
-    console.log(injekt(res.data, argv._[0]));
+    out = injekt(res.data, argv._[0]);
   });
+
+  if (argv._[1]) {
+    require('fs').writeFileSync(argv._[1], out, 'utf-8');
+  } else {
+    console.log(out);
+  }
 }
 
 function injekt (input, repo) {
