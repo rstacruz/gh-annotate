@@ -1,6 +1,6 @@
 {
   "name": "gh-annotate",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
@@ -10,13 +10,13 @@
   "devDependencies": {
     "chai": "^2.2.0",
     "mocha": "^2.2.1",
-    "mocha-clean": "^0.4.0",
-    "read-input": "^0.2.0"
+    "mocha-clean": "^0.4.0"
   },
   "directories": {
     "test": "test"
   },
   "dependencies": {
+    "read-input": "^0.2.0",
     "yargs": "^3.7.0"
   }
 }
