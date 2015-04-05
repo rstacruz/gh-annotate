@@ -1,5 +1,23 @@
 #!/usr/bin/env node
 
+function githubSpec() {
+  try {
+    var exec = require('child_process').execSync;
+    var out = exec('git config --get remote.origin.url', { encoding: 'utf-8' });
+    out = out
+      .trim()
+      .replace(/^git@github\.com\//, '')
+      .replace(/^https?:\/\/github\.com\//, '')
+      .replace(/\.git$/, '');
+
+    return out;
+  } catch (e) {
+    console.error('  ! run this in a github repository.');
+    console.error('  ! make sure that "origin" points to the github repo.');
+    process.exit(1);
+  }
+}
+
 if (!module.parent) run();
 
 function run () {
@@ -17,14 +35,11 @@ function run () {
     process.exit(0);
   }
 
-  if (!argv._[0] || argv.help || argv.h) {
-    help({ method: console.error });
-    process.exit(1);
-  }
+  var gh = githubSpec();
 
-  read(argv._.slice(1), function (err, res) {
+  read(argv._, function (err, res) {
     if (err) throw err;
-    out = injekt(res.data, argv._[0]);
+    out = injekt(res.data, gh);
 
     if (argv._[1]) {
       require('fs').writeFileSync(argv._[1], out, 'utf-8');
@@ -40,8 +55,8 @@ function help (options) {
   log([
     '',
     '  Usage:',
-    '      gh-annotate <user>/<repo> <file>',
-    '      ... | gh-annotate <user>/<repo>',
+    '      gh-annotate <file>',
+    '      ... | gh-annotate',
   ].join("\n"));
 
   if (options && options.full) {

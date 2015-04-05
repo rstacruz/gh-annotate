@@ -30,7 +30,7 @@ Given this file:
 Run it:
 
 ```
-◦ gh-annotate rstacruz/jquery.transit CHANGELOG.md
+◦ gh-annotate CHANGELOG.md
 ```
 
 And you get this:
