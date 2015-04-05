@@ -12,12 +12,38 @@ function run () {
     process.exit(0);
   }
 
+  if (argv.help || argv.h) {
+    help({ full: true });
+    process.exit(0);
+  }
+
   if (!argv._[0] || argv.help || argv.h) {
+    help();
+    process.exit(1);
+  }
+
+  read(argv._.slice(1), function (err, res) {
+    if (err) throw err;
+    out = injekt(res.data, argv._[0]);
+
+    if (argv._[1]) {
+      require('fs').writeFileSync(argv._[1], out, 'utf-8');
+    } else {
+      console.log(out);
+    }
+  });
+}
+
+function help (options) {
+  console.error([
+    '',
+    '  Usage:',
+    '      gh-annotate <user>/<repo> <file>',
+    '      ... | gh-annotate <user>/<repo>',
+  ].join("\n"));
+
+  if (options && options.full)
     console.error([
-      '',
-      '  Usage:',
-      '      gh-annotate <user>/<repo> <file>',
-      '      ... | gh-annotate <user>/<repo>',
       '',
       '  Description:',
       '      annotates files.',
@@ -27,19 +53,6 @@ function run () {
       '      -h, --help        show this screen',
       '      -v, --version     print version information'
     ].join("\n"));
-    process.exit(1);
-  }
-
-  read(argv._.slice(1), function (err, res) {
-    if (err) throw err;
-    out = injekt(res.data, argv._[0]);
-  });
-
-  if (argv._[1]) {
-    require('fs').writeFileSync(argv._[1], out, 'utf-8');
-  } else {
-    console.log(out);
-  }
 }
 
 function injekt (input, repo) {
@@ -64,10 +77,12 @@ function injekt (input, repo) {
     return '' + key + suff;
   });
 
-  if (annotations.length > 0)
-    return [ body, annotations.join("\n") ].join("\n\n");
-  else
+  if (annotations.length > 0) {
+    if (!/\n$/.test(body)) body = body + "\n";
+    return [ body, annotations.join("\n") ].join("\n");
+  } else {
     return body;
+  }
 }
 
 module.exports = { run: run, injekt: injekt };
