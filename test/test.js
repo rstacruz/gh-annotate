@@ -14,6 +14,16 @@ it('annotates issues', function () {
   ].join(''));
 });
 
+it('annotates multiple issues', function () {
+  var out = work("Hello #1 #2");
+  expect(out).eql([
+    "Hello [#1] [#2]\n",
+    "\n",
+    "[#1]: https://github.com/user/repo/issues/1\n",
+    "[#2]: https://github.com/user/repo/issues/2"
+  ].join(''));
+});
+
 it('annotates users', function () {
   var out = work("Hello @rstacruz");
   expect(out).eql([

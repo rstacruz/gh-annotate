@@ -62,7 +62,7 @@ function injekt (input, repo) {
   var annotations = [];
   var body = "" + input;
   
-  body = body.replace(/#(\d+)(.?)/, function (_, issue, suff) {
+  body = body.replace(/#(\d+)(.?)/g, function (_, issue, suff) {
     if (suff === ']') return _;
     var key = '[#' + issue + ']';
 
@@ -71,7 +71,7 @@ function injekt (input, repo) {
     return '' + key + suff;
   });
 
-  body = body.replace(/@([a-zA-Z0-9_-]+)(.?)/, function (_, user, suff) {
+  body = body.replace(/@([a-zA-Z0-9_-]+)(.?)/g, function (_, user, suff) {
     if (suff === ']') return _;
     var key = '[@' + user + ']';
 
