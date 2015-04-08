@@ -5,6 +5,9 @@
   "scripts": {
     "test": "mocha"
   },
+  "bin": {
+    "gh-annotate": "./bin/gh-annotate"
+  },
   "author": "Rico Sta. Cruz <hi@ricostacruz.com>",
   "license": "MIT",
   "devDependencies": {
