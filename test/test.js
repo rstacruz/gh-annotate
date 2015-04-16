@@ -53,7 +53,7 @@ it('is idempotent', function () {
   ].join(''));
 });
 
-it('does not duplicate annotations', function () {
+it('does not duplicate existing references', function () {
   var out = work([
     "Hello #1\n",
     "[#1]: http://google.com"
@@ -62,5 +62,18 @@ it('does not duplicate annotations', function () {
   expect(out).eql([
     "Hello [#1]\n",
     "[#1]: http://google.com"
+  ].join(''));
+});
+
+it('does not duplicate annotations', function () {
+  var out = work([
+    "Hello #1\n",
+    "Hi #1"
+  ].join(""));
+
+  expect(out).eql([
+    "Hello [#1]\n",
+    "Hi [#1]\n\n",
+    "[#1]: https://github.com/user/repo/issues/1"
   ].join(''));
 });

@@ -41,7 +41,7 @@ function run () {
  */
 
 function injekt (input, repo) {
-  var annotations = [];
+  var annotations = {};
   var body = "" + input;
 
   var replace = replaceLink.bind({
@@ -59,9 +59,15 @@ function injekt (input, repo) {
     '[@&]',
     'https://github.com/&');
 
-  if (annotations.length > 0) {
+  if (Object.keys(annotations).length > 0) {
+    // Add new line if there isn't any
     if (!/\n$/.test(body)) body = body + "\n";
-    return [ body, annotations.join("\n") ].join("\n");
+
+    var annotationStrings = Object.keys(annotations).map(function (key) {
+      return '' + key + ': ' + annotations[key];
+    });
+
+    return [ body, annotationStrings.join("\n") ].join("\n");
   } else {
     return body;
   }
@@ -86,7 +92,7 @@ function replaceLink (body, expr, replacement, urlspec) {
     var url = urlspec.replace('{repo}', repo).replace('&', issue);
 
     if (!RegExp('(^|\n)' + escapeRegExp(key) + ':').test(body))
-      annotations.push('' + key + ': ' + url);
+      annotations[key] = url;
 
     return '' + key + suff;
   });
