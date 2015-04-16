@@ -78,7 +78,7 @@ it('does not duplicate annotations', function () {
   ].join(''));
 });
 
-xit('appends references to other refs', function () {
+it('appends references to other refs', function () {
   var out = work([
     "Hello #1\n",
     "[k]: j"

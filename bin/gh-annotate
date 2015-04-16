@@ -63,6 +63,10 @@ function injekt (input, repo) {
   if (!/\n$/.test(body)) body = body + "\n";
 
   if (Object.keys(annotations).length > 0) {
+    // join with existing references
+    if (/\n\[.+?\]: .+?\n$/.test(body))
+      body = body.substr(0, body.length-1);
+
     // build the block
     var annotationStrings = Object.keys(annotations).map(function (key) {
       return '' + key + ': ' + annotations[key];
