@@ -96,3 +96,20 @@ it('adds new line at EOF', function () {
   expect(out).eql("Hello\n");
 });
 
+it('version comparisons', function () {
+  var out = work([
+    "v0.2.1(...v0.2.0)",
+  ].join(""));
+
+  expect(out).eql([
+    "[v0.2.1]\n",
+    "\n",
+    "[v0.2.1]: https://github.com/user/repo/compare/v0.2.0...v0.2.1\n"
+  ].join(''));
+});
+
+it('adds new line at EOF', function () {
+  var out = work("Hello");
+  expect(out).eql("Hello\n");
+});
+

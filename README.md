@@ -10,6 +10,7 @@ Adds GitHub links to Markdown files. Perfect for maintaining changelog files.
 
  * Turns `#847` to issue links.
  * Turns `@rstacruz` to user links.
+ * Turns `v0.2.4(...v0.2.3)` into compare links.
  * Is idempotent.
 
 <br>

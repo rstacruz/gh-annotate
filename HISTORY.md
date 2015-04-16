@@ -1,4 +1,4 @@
-## v0.2.2 - Apr 16, 2015
+## v0.2.2...v0.2.1 - Apr 16, 2015
 
 * Don't duplicate references.
 * Ensure that files end in new lines.
