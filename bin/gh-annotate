@@ -59,15 +59,16 @@ function injekt (input, repo) {
     '[@&]',
     'https://github.com/&');
 
-  if (Object.keys(annotations).length > 0) {
-    // Add new line if there isn't any
-    if (!/\n$/.test(body)) body = body + "\n";
+  // Add new line if there isn't any
+  if (!/\n$/.test(body)) body = body + "\n";
 
+  if (Object.keys(annotations).length > 0) {
+    // build the block
     var annotationStrings = Object.keys(annotations).map(function (key) {
       return '' + key + ': ' + annotations[key];
     });
 
-    return [ body, annotationStrings.join("\n") ].join("\n");
+    return [ body, annotationStrings.join("\n") ].join("\n") + "\n";
   } else {
     return body;
   }

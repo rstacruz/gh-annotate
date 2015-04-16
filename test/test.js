@@ -10,7 +10,7 @@ it('annotates issues', function () {
   expect(out).eql([
     "Hello [#1]\n",
     "\n",
-    "[#1]: https://github.com/user/repo/issues/1"
+    "[#1]: https://github.com/user/repo/issues/1\n"
   ].join(''));
 });
 
@@ -20,7 +20,7 @@ it('annotates multiple issues', function () {
     "Hello [#1] [#2]\n",
     "\n",
     "[#1]: https://github.com/user/repo/issues/1\n",
-    "[#2]: https://github.com/user/repo/issues/2"
+    "[#2]: https://github.com/user/repo/issues/2\n"
   ].join(''));
 });
 
@@ -29,7 +29,7 @@ it('annotates users', function () {
   expect(out).eql([
     "Hello [@rstacruz]\n",
     "\n",
-    "[@rstacruz]: https://github.com/rstacruz"
+    "[@rstacruz]: https://github.com/rstacruz\n"
   ].join(''));
 });
 
@@ -39,7 +39,7 @@ it('annotates users and issues', function () {
     "Hello [#100] ([@rstacruz])\n",
     "\n",
     "[#100]: https://github.com/user/repo/issues/100\n",
-    "[@rstacruz]: https://github.com/rstacruz"
+    "[@rstacruz]: https://github.com/rstacruz\n"
   ].join(''));
 });
 
@@ -49,19 +49,19 @@ it('is idempotent', function () {
     "Hello [#100] ([@rstacruz])\n",
     "\n",
     "[#100]: https://github.com/user/repo/issues/100\n",
-    "[@rstacruz]: https://github.com/rstacruz"
+    "[@rstacruz]: https://github.com/rstacruz\n"
   ].join(''));
 });
 
 it('does not duplicate existing references', function () {
   var out = work([
     "Hello #1\n",
-    "[#1]: http://google.com"
+    "[#1]: http://google.com\n"
   ].join(""));
 
   expect(out).eql([
     "Hello [#1]\n",
-    "[#1]: http://google.com"
+    "[#1]: http://google.com\n"
   ].join(''));
 });
 
@@ -74,6 +74,25 @@ it('does not duplicate annotations', function () {
   expect(out).eql([
     "Hello [#1]\n",
     "Hi [#1]\n\n",
-    "[#1]: https://github.com/user/repo/issues/1"
+    "[#1]: https://github.com/user/repo/issues/1\n"
   ].join(''));
 });
+
+xit('appends references to other refs', function () {
+  var out = work([
+    "Hello #1\n",
+    "[k]: j"
+  ].join(""));
+
+  expect(out).eql([
+    "Hello [#1]\n",
+    "[k]: j\n",
+    "[#1]: https://github.com/user/repo/issues/1\n"
+  ].join(''));
+});
+
+it('adds new line at EOF', function () {
+  var out = work("Hello");
+  expect(out).eql("Hello\n");
+});
+
