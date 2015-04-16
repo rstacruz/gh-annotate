@@ -1,3 +1,9 @@
+## v0.2.2 - Apr 16, 2015
+
+* Don't duplicate references.
+* Ensure that files end in new lines.
+* Don't add an extra new line if appending to other references.
+
 ## v0.2.1 - Apr 8, 2015
 
 * Fix `bin` not being symlinked.
