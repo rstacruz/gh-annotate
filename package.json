@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "prepublish": "npm run build-man",
-    "build-man": "ronn man/*.md --html --roff --style=toc,80c --organization=\"@rstacruz\"",
+    "build-man": "which ronn && ronn man/*.md --html --roff --style=toc,80c --organization=\"@rstacruz\"",
     "test": "mocha"
   },
   "bin": {
