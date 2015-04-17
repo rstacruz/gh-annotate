@@ -3,6 +3,8 @@
   "version": "0.2.2",
   "main": "index.js",
   "scripts": {
+    "prepublish": "npm run build-man",
+    "build-man": "ronn man/*.md --html --roff --style=toc,80c --organization=\"@rstacruz\"",
     "test": "mocha"
   },
   "bin": {

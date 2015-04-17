@@ -1,0 +1,111 @@
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "GH\-ANNOTATE" "1" "April 2015" "@rstacruz" ""
+.
+.SH "NAME"
+\fBgh\-annotate\fR \- Add GitHub links to Markdown files
+.
+.SH "USAGE"
+gh\-annotate \fIfile\fR
+.
+.br
+\&\.\.\. | gh\-annotate > \fIoutfile\fR
+.
+.SH "DESCRIPTION"
+Adds GitHub links to Markdown files\. Perfect for maintaining changelog files and other Markdown artifacts\.
+.
+.P
+Running gh\-annotate(1) on a file will perform the following things:
+.
+.IP "\(bu" 4
+Turns \fB#847\fR to issue links\.
+.
+.IP "\(bu" 4
+Turns \fB@rstacruz\fR to user links\.
+.
+.IP "\(bu" 4
+Turns \fBv0\.2\.4(\.\.\.v0\.2\.3)\fR into compare links\.
+.
+.IP "" 0
+.
+.P
+It Is idempotent, so running (and re\-running) it on a file should have no side effects\.
+.
+.SH "OPTIONS"
+.
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Displays the help screen\.
+.
+.TP
+\fB\-\-version\fR
+Displays version information\.
+.
+.SH "INSTALLATION"
+gh\-annotate(1) is available via npm as gh\-annotate \fIhttps://npmjs\.org/package/gh\-annotate\fR\.
+.
+.IP "" 4
+.
+.nf
+
+npm install \-g gh\-annotate
+.
+.fi
+.
+.IP "" 0
+.
+.SH "EXAMPLE"
+Given this file:
+.
+.IP "" 4
+.
+.nf
+
+$ cat CHANGELOG\.md
+
+  ## v0\.8\.2
+
+  * Fix blabberdupes (@manilajs, #2)
+  * Improve dapperdonks (@mashupgarage, #8)
+.
+.fi
+.
+.IP "" 0
+.
+.P
+Run it, and you get this:
+.
+.IP "" 4
+.
+.nf
+
+$ gh\-annotate CHANGELOG\.md
+$ cat CHANGELOG\.md
+
+## v0\.8\.2
+
+* Fix blabberdupes ([@manilajs], [#2])
+* Improve dapperdonks ([@mashupgarage], [#8])
+.
+.fi
+.
+.IP "" 0
+.
+.SH "COPYRIGHT"
+\fBgh\-annotate\fR (c) 2015+, Rico Sta\. Cruz\. Released under the MIT License\. Authored and maintained by Rico Sta\. Cruz with help from contributors\.
+.
+.IP "\(bu" 4
+ricostacruz\.com \fIhttp://ricostacruz\.com\fR
+.
+.IP "\(bu" 4
+GitHub rstacruz/gh\-annotate \fIhttps://github\.com/rstacruz/gh\-annotate\fR
+.
+.IP "\(bu" 4
+GitHub @rstacruz \fIhttps://github\.com/rstacruz\fR
+.
+.IP "\(bu" 4
+Twitter @rstacruz \fIhttps://twitter\.com/rstacruz\fR
+.
+.IP "" 0
+
