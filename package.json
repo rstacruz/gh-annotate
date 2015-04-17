@@ -18,10 +18,20 @@
     "mocha-clean": "^0.4.0"
   },
   "directories": {
+    "man": "man",
     "test": "test"
   },
   "dependencies": {
     "read-input": "^0.2.0",
     "yargs": "^3.7.0"
-  }
+  },
+  "description": "Adds GitHub links to Markdown files. Perfect for maintaining changelog files. See: [gh-annotate(1)].",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rstacruz/gh-annotate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rstacruz/gh-annotate/issues"
+  },
+  "homepage": "https://github.com/rstacruz/gh-annotate"
 }
