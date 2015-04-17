@@ -19,6 +19,9 @@ It Is idempotent, so running (and re-running) it on a file should have no side e
 
 ## OPTIONS
 
+ * <file> :
+   The file to operate on. If provided, it will be written to in place.
+
  * `-h`, `--help` :
    Displays the help screen.
 

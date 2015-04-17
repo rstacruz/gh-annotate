@@ -1,6 +1,6 @@
 # gh-annotate
 
-Adds GitHub links to Markdown files. Perfect for maintaining changelog files.
+Adds GitHub links to Markdown files. Perfect for maintaining changelog files. See: [gh-annotate(1)].
 
 [![Status](https://travis-ci.org/rstacruz/gh-annotate.svg?branch=master)](https://travis-ci.org/rstacruz/gh-annotate)  
 
@@ -8,10 +8,13 @@ Adds GitHub links to Markdown files. Perfect for maintaining changelog files.
 
 ## What it does
 
+Running [gh-annotate(1)] on a file will perform the following things:
+
  * Turns `#847` to issue links.
  * Turns `@rstacruz` to user links.
  * Turns `v0.2.4(...v0.2.3)` into compare links.
- * Is idempotent.
+
+It is idempotent, so running (and re-running) it on a file should have no side effects.
 
 <br>
 
@@ -71,3 +74,4 @@ Authored and maintained by Rico Sta. Cruz with help from contributors ([list][co
 
 [MIT]: http://mit-license.org/
 [contributors]: http://github.com/rstacruz/gh-annotate/contributors
+[gh-annotate(1)]: http://rawgit.com/rstacruz/gh-annotate/master/man/gh-annotate.1.html
