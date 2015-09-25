@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+var githubSlug = require('github-slug');
+
 if (!module.parent) run();
 module.exports = { run: run, injekt: injekt };
 
@@ -20,17 +22,19 @@ function run () {
 
   var out;
 
-  var gh = githubSpec();
-
-  read(argv._, function (err, res) {
+  githubSlug('.', function (err, gh) {
     if (err) throw err;
-    out = injekt(res.data, gh);
 
-    if (argv._[0]) {
-      require('fs').writeFileSync(argv._[0], out, 'utf-8');
-    } else {
-      process.stdout.write(out);
-    }
+    read(argv._, function (err, res) {
+      if (err) throw err;
+      out = injekt(res.data, gh);
+
+      if (argv._[0]) {
+        require('fs').writeFileSync(argv._[0], out, 'utf-8');
+      } else {
+        process.stdout.write(out);
+      }
+    });
   });
 }
 
@@ -120,31 +124,6 @@ function replaceLink (body, expr, replacement, urlspec) {
 
     return '' + key + suff;
   });
-}
-
-/*
- * returns the github user/repo pair, or dies with an error if not found
- *
- *     githubSpec()  //=> "rstacruz/gh-annotate"
- */
-
-function githubSpec() {
-  try {
-    var exec = require('child_process').execSync;
-    var out = exec('git config --get remote.origin.url', { encoding: 'utf-8' });
-    out = out
-      .trim()
-      .replace(/^git@github\.com\//, '')
-      .replace(/^https?:\/\/github\.com\//, '')
-      .replace(/\.git$/, '');
-
-    return out;
-  } catch (e) {
-    console.error('');
-    console.error('  ! run this in a github repository.');
-    console.error('  ! make sure that "origin" points to the github repo.');
-    process.exit(1);
-  }
 }
 
 /*
