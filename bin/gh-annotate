@@ -1,16 +1,16 @@
 #!/usr/bin/env node
 
-var githubSlug = require('github-slug');
+var githubSlug = require('github-slug')
 
-if (!module.parent) run();
-module.exports = { run: run, injekt: injekt };
+if (!module.parent) run()
+module.exports = { run: run, injekt: injekt }
 
 /*
  * run
  */
 
 function run () {
-  var read = require('read-input');
+  var read = require('read-input')
   var argv = require('yargs')
     .alias('v', 'version')
     .alias('h', 'help')
@@ -18,24 +18,24 @@ function run () {
     .version(function() { return require('../package').version; })
     .usage('Usage:\n$0 <file>\n... | $0')
     .describe('v', 'show version information')
-    .argv;
+    .argv
 
-  var out;
+  var out
 
   githubSlug('.', function (err, gh) {
-    if (err) throw err;
+    if (err) throw err
 
     read(argv._, function (err, res) {
-      if (err) throw err;
-      out = injekt(res.data, gh);
+      if (err) throw err
+      out = injekt(res.data, gh)
 
       if (argv._[0]) {
-        require('fs').writeFileSync(argv._[0], out, 'utf-8');
+        require('fs').writeFileSync(argv._[0], out, 'utf-8')
       } else {
-        process.stdout.write(out);
+        process.stdout.write(out)
       }
-    });
-  });
+    })
+  })
 }
 
 /*
@@ -45,67 +45,67 @@ function run () {
  */
 
 function injekt (input, repo) {
-  var annotations = {};
-  var body = "" + input;
+  var annotations = {}
+  var body = "" + input
 
   var replace = replaceLink.bind({
     repo: repo,
     annotations: annotations
-  });
+  })
 
   body = replace(body,
     /#(\d+)/,
     '[#&]',
-    'https://github.com/{repo}/issues/&');
+    'https://github.com/{repo}/issues/&')
 
   body = replace(body,
     /@([a-zA-Z0-9_-]+)/,
     '[@&]',
-    'https://github.com/&');
+    'https://github.com/&')
 
   body = replace(body,
     /(v[\.a-zA-Z0-9_-]+)\(\.\.\.([\.a-zA-Z0-9_-]+)\)/,
     '[$1]',
-    'https://github.com/{repo}/compare/$2...$1');
+    'https://github.com/{repo}/compare/$2...$1')
 
   // Add new line if there isn't any
-  if (!/\n$/.test(body)) body = body + "\n";
+  if (!/\n$/.test(body)) body = body + "\n"
 
   if (Object.keys(annotations).length > 0) {
     // join with existing references
     if (/\n\[.+?\]: .+?\n$/.test(body))
-      body = body.substr(0, body.length-1);
+      body = body.substr(0, body.length-1)
 
     // build the block
     var annotationStrings = Object.keys(annotations).map(function (key) {
-      return '' + key + ': ' + annotations[key];
-    });
+      return '' + key + ': ' + annotations[key]
+    })
 
-    return [ body, annotationStrings.join("\n") ].join("\n") + "\n";
+    return [ body, annotationStrings.join("\n") ].join("\n") + "\n"
   } else {
-    return body;
+    return body
   }
 }
 
 /*
  * replace links
  *
- *     repl = replaceLink.bind({ repo: 'rstacruz/flatdoc', annotations: [] });
- *     repl(body, /#(\d+)/, '[@&]', 'http://github.com/&');
+ *     repl = replaceLink.bind({ repo: 'rstacruz/flatdoc', annotations: [] })
+ *     repl(body, /#(\d+)/, '[@&]', 'http://github.com/&')
  */
 
 function replaceLink (body, expr, replacement, urlspec) {
-  var repo = this.repo;
-  var annotations = this.annotations;
+  var repo = this.repo
+  var annotations = this.annotations
 
-  expr = RegExp('' + expr.source + '(.?)', 'g');
+  expr = RegExp('' + expr.source + '(.?)', 'g')
 
   return body.replace(expr, function (_, issue) {
-    var args = arguments;
+    var args = arguments
 
     /* -2 is index, -1 is full str */
-    var suff = arguments[arguments.length-3];
-    if (suff === ']') return _;
+    var suff = arguments[arguments.length-3]
+    if (suff === ']') return _
 
     function subst (str) {
       return str
@@ -113,23 +113,23 @@ function replaceLink (body, expr, replacement, urlspec) {
       .replace('{repo}', repo)
       .replace('$1', args[1])
       .replace('$2', args[2])
-      .replace('$3', args[3]);
+      .replace('$3', args[3])
     }
 
-    var key = subst(replacement);
-    var url = subst(urlspec);
+    var key = subst(replacement)
+    var url = subst(urlspec)
 
     if (!RegExp('(^|\n)' + escapeRegExp(key) + ':').test(body))
-      annotations[key] = url;
+      annotations[key] = url
 
-    return '' + key + suff;
-  });
+    return '' + key + suff
+  })
 }
 
 /*
  * escapes a string into a regexp expression
  */
 
-function escapeRegExp(string) {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+function escapeRegExp (string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
 }
