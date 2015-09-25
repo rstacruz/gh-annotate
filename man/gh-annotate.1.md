@@ -2,8 +2,8 @@
 
 ## USAGE
 
-gh-annotate <file><br>
-... | gh-annotate &gt; <outfile>
+gh-annotate *file*  
+... | gh-annotate > *outfile*
 
 ## DESCRIPTION
 
@@ -19,14 +19,14 @@ It Is idempotent, so running (and re-running) it on a file should have no side e
 
 ## OPTIONS
 
- * <file> :
-   The file to operate on. If provided, it will be written to in place.
+* *file*  
+The file to operate on. If provided, it will be written to in place.
 
- * `-h`, `--help` :
-   Displays the help screen.
+* `-h`, `--help`  
+  Displays the help screen.
 
- * `--version` : 
-   Displays version information.
+* `--version`  
+Displays version information.
 
 ## INSTALLATION
 

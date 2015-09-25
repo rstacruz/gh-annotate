@@ -3,8 +3,9 @@
 \fBgh-annotate\fR \- Add GitHub links to Markdown files
 .SH USAGE
 .P
-gh\-annotate <file><br>
-\|\.\.\. | gh\-annotate &gt; <outfile>
+gh\-annotate \fIfile\fR
+.br
+\|\.\.\. | gh\-annotate > \fIoutfile\fR
 .SH DESCRIPTION
 .P
 Adds GitHub links to Markdown files\. Perfect for maintaining changelog files and other Markdown artifacts\.
@@ -24,13 +25,16 @@ It Is idempotent, so running (and re\-running) it on a file should have no side 
 .SH OPTIONS
 .RS 0
 .IP \(bu 2
-<file> :
+\fIfile\fR
+.br
 The file to operate on\. If provided, it will be written to in place\.
 .IP \(bu 2
-\fB\-h\fP, \fB\-\-help\fP :
+\fB\-h\fP, \fB\-\-help\fP
+.br
 Displays the help screen\.
 .IP \(bu 2
-\fB\-\-version\fP : 
+\fB\-\-version\fP
+.br
 Displays version information\.
 
 .RE
