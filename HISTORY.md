@@ -1,3 +1,10 @@
+## [v1.0.0]
+> Sep 26, 2015
+
+* Internal: coding style changes.
+* Internal: use [github-slug](https://www.npmjs.com/package/github-slug).
+* No new functionality.
+
 ## [v0.3.0]
 > Sep 26, 2015
 
@@ -37,3 +44,4 @@
 [v0.2.0]: https://github.com/rstacruz/gh-annotate/compare/v0.1.0...v0.2.0
 [v0.2.3]: https://github.com/rstacruz/gh-annotate/compare/v0.2.2...v0.2.3
 [v0.3.0]: https://github.com/rstacruz/gh-annotate/compare/v0.2.3...v0.3.0
+[v1.0.0]: https://github.com/rstacruz/gh-annotate/compare/v0.3.0...v1.0.0
