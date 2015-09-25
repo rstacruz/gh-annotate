@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "prepublish": "npm run build-man",
-    "build-man": "if which ronn; then ronn man/*.md --html --roff --style=toc,80c --organization=\"@rstacruz\"; fi",
+    "build-man": "marked-man man/gh-annotate.1.md > man/gh-annotate.1",
     "test": "mocha"
   },
   "bin": {
@@ -14,6 +14,7 @@
   "license": "MIT",
   "devDependencies": {
     "chai": "^2.2.0",
+    "marked-man": "^0.1.5",
     "mocha": "^2.2.1",
     "mocha-clean": "^0.4.0",
     "mocha-standard": "^1.0.0",
