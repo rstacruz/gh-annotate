@@ -22,7 +22,7 @@
     "test": "test"
   },
   "dependencies": {
-    "read-input": "^0.2.0",
+    "read-input": "^0.3.1",
     "yargs": "^3.7.0"
   },
   "description": "Adds GitHub links to Markdown files. Perfect for maintaining changelog files. See: [gh-annotate(1)].",
