@@ -29,7 +29,7 @@ function run () {
     if (argv._[0]) {
       require('fs').writeFileSync(argv._[0], out, 'utf-8');
     } else {
-      console.log(out);
+      process.stdout.write(out);
     }
   });
 }
